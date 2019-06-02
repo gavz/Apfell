@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% if title %}
+    <title>{{ title }} - Apfell</title>
+    {% else %}
+    <title>Welcome - Apfell</title>
+    {% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/bootstrap.3.3.7.min.css">
+    <script src="/static/static_js.js"></script>
+
+</head>
+
+<style>
+    {% block body_config %} {% endblock %}
+</style>
+<body>
+    <nav class="navbar navbar-light navbar-inverse justify-content-between">
+        <div class="container-fluid">
+            <div class="navbar-header" align="top">
+
+                <a class="navbar-brand-expand-md" href="{{ links.index }}"><img src="/static/apfell-dark.png" style="width:45px;height:50px"></a>
+
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <!-- These are the links across the top, above this is the main icon/name for home -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Manage Operations <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><h5 class="dropdown-header">Current Operation</h5></li>
+                            <li><a href="{{ links.payload_management }}">Payload Management</a></li>
+                            <li><a href="{{ links.c2profile_management }}">C2 Profiles Management</a></li>
+                            <li><a href="{{ links.database_management }}">Database Management</a></li>
+                            <li><a href="{{ links.analytics }}">Analytics Dashboard</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><h5 class="dropdown-header">Global Management</h5></li>
+                            <li><a href="{{ links.operations_management }}">Operations Management</a></li>
+                            <li><a href="{{ links.transform_management}}">Transform Management</a></li>
+                            <li><a href="{{ links.artifacts_management}}">Base Artifacts Management</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Operational Views <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ links.callbacks }}">Active Callbacks</a></li>
+                            <li><a href="{{ links.view_tasks }}">All Tasks</a></li>
+                            <li><a href="{{ links.screencaptures}}">Screencaptures</a></li>
+                            <li><a href="{{ links.keylogs }}">Keylogs</a></li>
+                            <li><a href="{{ links.files }}">Upload/Download Files</a></li>
+                            <li><a href="{{ links.credentials}}">Credentials</a></li>
+                            <li><a href="{{ links.search }}">Search</a></li>
+                            <li><a href="{{ links.comments }}">Comments</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Create Components <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ links.payloads_creation }}">Create Base Payload</a></li>
+                            <li><a href="{{ links.instantiate_c2profile }}">Instantiate C2 Profile</a></li>
+                        </ul>
+                    </li>
+                     <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Services <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ links.services_host_file }}">Host Files</a></li>
+                            <li class="disabled"><a href="#">Macro Generation</a></li>
+                            <li class="disabled"><a href="#">Bash Obfuscation</a></li>
+                            <li class="disabled"><a href="#">JavaScript Obfuscation</a></li>
+                        </ul>
+                    </li>
+                     <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            API <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ links.apiui_commandlines }}">RESTful API</a></li>
+                            <li><a href="{{ links.apiui_documentation }}">C2 Documentation</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{ links.apiui_command_help }}">Payload Type Command Help</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Reporting <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{links.attack_mapping}}">ATT&CK Mappings</a></li>
+                            <li><a href="{{links.full_timeline}}">Full Timeline</a></li>
+                            <li><a href="{{links.reporting_artifacts}}">Reporting Artifacts</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><h5 class="dropdown-header">Component Reports</h5></li>
+                            <li class="disabled"><a href="#">Operators</a></li>
+                            <li class="disabled"><a href="#">Hosts</a></li>
+                            <li class="disabled"><a href="#">Compromised Users</a></li>
+                            <li class="disabled"><a href="#">Callbacks</a></li>
+                            <li class="disabled"><a href="#">Days</a></li>
+                        </ul>
+                    </li>
+                    {% if name %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" ariahaspopup="true" aria-expanded="false">Profile ({{name}})<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                                    <li><a href="{{ links.logout }}">Logout</a></li>
+                        <li><a href="{{ links.settings }}">Settings</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        {% if links.current_operation != "" %}
+                        <font size="6"><span class="operation">{{links.current_operation}}&nbsp;&nbsp;</span></font>
+                        {% else %}
+                            <font style="color:red" size="5">Select an operation!&nbsp;&nbsp;</font>
+                        {% endif %}
+
+                    </li>
+                    {% else %}
+                    <li><a href="{{ links.login }}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="top-alert"></div>
+    <div id="main" class="container-fluid">
+
+    {% block body %}{% endblock %}
+    <div id="bottom-alert" style="white-space: pre-wrap"></div>
+    </div>
+    <script type="text/javascript">
+    {% include "shared_javascript.js" %}
+    {% block scripts %}{% endblock %}
+
+    </script>
+</body>
+</html>
